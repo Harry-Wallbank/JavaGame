@@ -1,6 +1,7 @@
 import edu.digipen.InputManager;
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
+import edu.digipen.level.GameLevelManager;
 
 import java.awt.event.KeyEvent;
 
@@ -12,19 +13,20 @@ public class WakeBoard extends GameObject
 	{
 		super("Player2",18,56,"WakeBoard.png");
 		setPosition(0,-250);
-		setZOrder(2);
+		setZOrder(0);
 	}
 
 	@Override public void update(float dt)
 	{
 
-		if(InputManager.isPressed(KeyEvent.VK_LEFT))
+
+		if(InputManager.isPressed(KeyEvent.VK_LEFT)&& getPositionX()>=-940)
 		{
-			setPositionX(getPositionX()-1);
+			setPositionX(getPositionX()-3);
 		}
-		if(InputManager.isPressed(KeyEvent.VK_RIGHT))
+		if(InputManager.isPressed(KeyEvent.VK_RIGHT)&& getPositionX()<=940)
 		{
-			setPositionX(getPositionX()+1);
+			setPositionX(getPositionX()+3);
 		}
 		if(InputManager.isPressed(KeyEvent.VK_DOWN))
 		{
@@ -51,6 +53,13 @@ public class WakeBoard extends GameObject
 		else
 		{
 			return min;
+		}
+	}
+	@Override public void collisionReaction(GameObject collidedWith)
+	{
+		if(collidedWith.getName().equals("Log"))
+		{
+			GameLevelManager.goToLevel(new MainMenu());
 		}
 	}
 }
